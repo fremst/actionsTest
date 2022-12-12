@@ -7,9 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
-      - run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       - uses: actions/setup-python@v4
         with:
           python-version: "3.9"
@@ -19,6 +16,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
+      - id: get-directories
+        run: echo "::set-output name=directories::$((git diff-tree --name-only HEAD^ HEAD))"
+      - run: echo $((${{ steps.directories.outputs.directories }}))
       - run: echo 'Y' | sam sync
           --stack-name testStack33
           --template-file localCreationTest/template.yaml
