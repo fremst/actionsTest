@@ -14,8 +14,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
-      - run: ls
-      - run: ls localCreationTest
-      - run: sam sync --stack-name testStack29 --template-file template.yaml --s3-bucket mimicus.dev --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --no-dependency-layer
+      # - run: ls
+      # - run: ls localCreationTest
+      - run: sam sync --stack-name testStack29 --template-file localCreationTest/template.yaml --s3-bucket mimicus.dev --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --no-dependency-layer
       # - run: sam build --use-container
       # - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
