@@ -14,14 +14,16 @@ jobs:
 #       - run: git diff --name-only | cut -d "/" -f1 | sort -u
 #       - run: git diff ${{ github.event.before }} ${{ github.sha }} --skip-to ".github"
       - id: get-directories
-        run: echo "directories=git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u" >> $GITHUB_STATE
+        run: echo "::set-output name=directories""$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u)"
+#         run: echo "directories=git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u" >> $GITHUB_STATE
 #         run: git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u
 #       - id: get-directories
 #         run: echo "::set-output name=directories::git diff --name-only | cut -d "/" -f1 | sort -u"
-      - run: echo "${{ env.directories }}"
+#      - run: echo "${{ env.directories }}"
+#       - run:
+#       #           for changed_file in ${{ steps.get-directories.outputs.all }}
       - run:
-      #           for changed_file in ${{ steps.get-directories.outputs.all }}
-          for changed_file in ${{ env.directories }}
+          for changed_file in ${{ steps.get-directories.outputs.directories }}
           do
             echo "Do something with this ${changed_file}."
           done
