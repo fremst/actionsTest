@@ -1,7 +1,9 @@
 import json
+import fitz
 
 def lambda_handler(event, context):
 
+    help(fitz)
     """Sample pure Lambda function
 
     Parameters

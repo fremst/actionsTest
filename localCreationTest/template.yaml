@@ -25,6 +25,8 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+      Layers:
+       - 'arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1'
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
