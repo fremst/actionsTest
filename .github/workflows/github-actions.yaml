@@ -8,18 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 1
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-      - run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "Do something with this ${changed_file}."
-          done
+          fetch-depth: 2
       - run: git diff
       - run: git diff --name-only | cut -d "/" -f1 | sort -u
       - id: get-directories
-        run: echo "::set-output name=directories::git diff --name-only | cut -d "/" -f1 | sort -u"
-      - run: echo $(${{ steps.directories.outputs.directories }})
+        run: git diff --name-only | cut -d "/" -f1 | sort -u
+#       - id: get-directories
+#         run: echo "::set-output name=directories::git diff --name-only | cut -d "/" -f1 | sort -u"
+      - run: 
+          for changed_file in ${{ steps.get-directories.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
 #       - uses: actions/setup-python@v4
 #         with:
 #           python-version: "3.9"
