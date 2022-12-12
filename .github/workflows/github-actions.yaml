@@ -3,10 +3,12 @@ on:
     branches:
       - main
 jobs:
-  deploy:
+  deploy-lambda:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - run: git diff
       - run: git diff --name-only | cut -d "/" -f1 | sort -u
       - id: get-directories
