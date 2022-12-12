@@ -9,11 +9,16 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: "3.9"
       - uses: aws-actions/setup-sam@v2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
-      - run: echo 'Y' | sam sync --stack-name testStack30 --template-file localCreationTest/template.yaml --s3-bucket mimicus.dev --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --no-dependency-layer
+      - run: echo 'Y' | sam sync
+          --stack-name testStack33
+          --template-file localCreationTest/template.yaml
+          --s3-bucket mimicus.dev
+          --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+          --no-dependency-layer
