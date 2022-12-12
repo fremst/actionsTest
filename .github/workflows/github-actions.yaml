@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: git diff
       - run: git diff --name-only | cut -d "/" -f1 | sort -u
       - id: get-directories
         run: echo "::set-output name=directories::git diff --name-only | cut -d "/" -f1 | sort -u"
