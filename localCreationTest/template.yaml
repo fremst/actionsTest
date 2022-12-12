@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   localCreationTest
@@ -25,8 +25,9 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+      Role: "arn:aws:iam::811925068804:role/lambda_basic_execution"
       Layers:
-       - 'arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1'
+        - "arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1"
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -38,6 +39,6 @@ Outputs:
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  # HelloWorldFunctionIamRole:
+  #   Description: "Implicit IAM Role created for Hello World function"
+  #   Value: !GetAtt HelloWorldFunctionRole.Arn
