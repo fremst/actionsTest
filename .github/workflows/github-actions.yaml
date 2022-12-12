@@ -17,7 +17,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
       - run: echo 'Y' | sam sync \
-          --stack-name testStack32 \
+          --stack-name testStack33 \
           --template-file localCreationTest/template.yaml \
           --s3-bucket mimicus.dev \
           --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
