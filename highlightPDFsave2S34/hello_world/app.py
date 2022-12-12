@@ -1,9 +1,9 @@
 import json
+# import requests
 import fitz
 
-def lambda_handler(event, context):
 
-    help(fitz)
+def lambda_handler(event, context):
     """Sample pure Lambda function
 
     Parameters
@@ -36,7 +36,7 @@ def lambda_handler(event, context):
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "test Local 2 aa11",
+            "message": "testOk Higha" + str(help(fitz.open)),
             # "location": ip.text.replace("\n", "")
         }),
     }
