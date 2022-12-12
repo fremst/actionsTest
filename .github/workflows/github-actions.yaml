@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: get-directories
-        run: echo "::set-output name=directories::$((git diff-tree --name-only HEAD^ HEAD))"
+        run: echo "::set-output name=directories::git diff-tree --name-only HEAD^ HEAD"
       - run: echo $((${{ steps.directories.outputs.directories }}))
       - uses: actions/setup-python@v4
         with:
