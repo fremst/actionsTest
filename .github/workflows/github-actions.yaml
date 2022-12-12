@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 2
       - run: git diff
       - run: git diff --name-only | cut -d "/" -f1 | sort -u
       - id: get-directories
