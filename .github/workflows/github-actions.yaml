@@ -10,7 +10,6 @@ jobs:
         with:
           fetch-depth: 2
       - run: git diff
-      - run: git diff origin/main origin/${GITHUB_HEAD_REF}
       - run: git diff --name-only | cut -d "/" -f1 | sort -u
       - id: get-directories
         run: git diff --name-only | cut -d "/" -f1 | sort -u
