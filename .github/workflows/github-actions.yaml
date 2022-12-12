@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: git diff-tree --name-only 133517e e171058
+      - run: git diff-tree --name-only HEAD^ HEAD
       - id: get-directories
         run: echo "::set-output name=directories::git diff-tree --name-only HEAD^ HEAD"
       - run: echo $(${{ steps.directories.outputs.directories }})
