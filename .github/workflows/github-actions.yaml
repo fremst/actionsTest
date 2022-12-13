@@ -9,12 +9,16 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: IFS=$'\n'
+#       - run: IFS=$'\n'
 #       - run: echo $((git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only) | cut -d "/" -f1 | sort -u)
       - run: echo $((git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only) | cut -d "/" -f1 | sort -u)
 #       - run: echo "directories=$((git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only) | cut -d "/" -f1 | sort -u)" >> $GITHUB_ENV
-      - run: echo "directories=$((git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only) | cut -d "/" -f1 | sort -u)" > out.txt
+#       - run: echo "directories=$((git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only) | cut -d "/" -f1 | sort -u)" > out.txt
+      - run: echo "$(git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only | cut -d "/" -f1 | sort -u)" > out.txt
       - run: ls
+      - run: while read directory; do
+                echo [$directory]
+             done < out.txt
 #       - run: echo "directories=$((git diff 5988974e33cf2c62dd9023a7c64a2f82511c768f ac9909bf00a62f02aa4dedb8592d007186bcfb7c --name-only) | cut -d "/" -f1 | sort -u)" >> $GITHUB_ENV
       - run:
           echo ${{ env.directories }}
