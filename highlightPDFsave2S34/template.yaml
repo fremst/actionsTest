@@ -1,9 +1,9 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  localCreationTest
+  highlightPDFsave2S3
 
-  Sample SAM Template for localCreationTest
+  Sample SAM Template for highlightPDFsave2S3
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -14,10 +14,11 @@ Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: LambdaFunctionName1
       CodeUri: hello_world/
       Handler: app.lambda_handler
-      Runtime: python3.9
+      Runtime: python3.8
+      Layers:
+        - arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1
       Architectures:
         - x86_64
       Events:
@@ -26,9 +27,6 @@ Resources:
           Properties:
             Path: /hello
             Method: get
-      Role: "arn:aws:iam::811925068804:role/lambda_basic_execution"
-      Layers:
-        - "arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1"
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -40,6 +38,7 @@ Outputs:
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn
-  # HelloWorldFunctionIamRole:
-  #   Description: "Implicit IAM Role created for Hello World function"
-  #   Value: !GetAtt HelloWorldFunctionRole.Arn
+  HelloWorldFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt lambda_basic_execution.AWS::IAM::Role #
+    # Value: !GetAtt HelloWorldFunctionRole.Arn #lambda_basic_execution
