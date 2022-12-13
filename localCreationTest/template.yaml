@@ -11,10 +11,10 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction222:
+  LambdaFunction44:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: LambdaFunctionName2
+      FunctionName: &lambdaFunctionName localCreationTest
       CodeUri: hello_world/
       Handler: app.lambda_handler
       Runtime: python3.9
@@ -39,7 +39,7 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
+    Value: !GetAtt *lambdaFunctionName #.Arn
   # HelloWorldFunctionIamRole:
   #   Description: "Implicit IAM Role created for Hello World function"
   #   Value: !GetAtt HelloWorldFunctionRole.Arn
