@@ -25,5 +25,5 @@ jobs:
           --template-file $directory/template.yaml
           --s3-bucket mimicus.dev
           --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
-          --no-dependency-layer
+          --no-dependency-layer;
           done < directories.txt
