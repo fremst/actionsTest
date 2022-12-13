@@ -10,11 +10,12 @@ jobs:
         with:
           fetch-depth: 2
 #       - run: echo "directories=$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u)" >> $GITHUB_ENV
-      - run: echo "directories=$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only -a --text | cut -d "/" -f1 | sort -u)" >> $GITHUB_ENV
+#       - run: echo "directories=$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only -a --text | cut -d "/" -f1 | sort -u)" >> $GITHUB_ENV
+      - run: echo "directories=($(git diff ${{ github.event.before }} ${{ github.sha }} --name-only -a --text | cut -d "/" -f1 | sort -u))" >> $GITHUB_ENV
       - run:
-          echo ${{ env.directories[0] }}
-          echo ${ env.directories[0] }
-          echo ${ env.directories }
+#           echo ${{ env.directories[0] }}
+#           echo ${ env.directories[0] }
+#           echo ${ env.directories }
           echo ${{ env.directories }}
 #       - id: get-directories
 #         run: echo "::set-output name=directories::$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u)"
