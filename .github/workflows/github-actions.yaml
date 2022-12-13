@@ -5,9 +5,6 @@ on:
 jobs:
   deploy-lambda:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     python-version: ["3.8", "3.9", "3.10"]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -17,15 +14,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+          python-version: ["3.8", "3.9", "3.10"]
       - uses: aws-actions/setup-sam@v2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
