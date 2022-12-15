@@ -9,57 +9,15 @@ Transform: AWS::Serverless-2016-10-31
 # (optional) / type: set of globals
 # Properties that are common to all your serverless functions, APIs, and simple tables. All the AWS::Serverless::Function, AWS::Serverless::Api, and AWS::Serverless::SimpleTable resources inherit the properties that are defined in the Globals section.
 # This section is unique to AWS SAM. There isn't a corresponding section in AWS CloudFormation templates.
-#  Function:
-#    Handler:
-#    Runtime:
-#    CodeUri:
-#    DeadLetterQueue:
-#    Description:
-#    MemorySize:
-#    Timeout:
-#    VpcConfig:
-#     Environment:
-#     Tags:
-#     Tracing:
-#     KmsKeyArn:
-#     Layers:
-#     AutoPublishAlias:
-#     DeploymentPreference:
-#     PermissionsBoundary:
-#     ReservedConcurrentExecutions:
-#     ProvisionedConcurrencyConfig:
-#     AssumeRolePolicyDocument:
-#     EventInvokeConfig:
-#     Architectures:
-#     EphemeralStorage:
-
-#    Api:
-#     Auth:
-#     Name:
-#     DefinitionUri:
-#     CacheClusterEnabled:
-#     CacheClusterSize:
-#     Variables:
-#     EndpointConfiguration:
-#     MethodSettings:
-#     BinaryMediaTypes:
-#     MinimumCompressionSize:
-#     Cors:
-#     GatewayResponses:
-#     AccessLogSetting:
-#     CanarySetting:
-#     TracingEnabled:
-#     OpenApiVersion:
-#     Domain:
 
 
 Description:
 # (optional) / type: String
 # A text string that describes the template.
 # This section corresponds directly with the Description section of AWS CloudFormation templates.
-  localCreationTest2
+  Description for LambdaFunction
 
-  SAM Template for localCreationTest
+  SAM Template for LambdaFunction
 
 
 #Metadata:
@@ -92,24 +50,51 @@ Resources:
 # (required) / type: set of resources
 # The stack resources and their properties, such as an Amazon Elastic Compute Cloud (Amazon EC2) instance or an Amazon Simple Storage Service (Amazon S3) bucket. You can refer to resources in the Resources and Outputs sections of the template.
 # This section is similar to the Resources section of AWS CloudFormation templates. In AWS SAM templates, this section can contain AWS SAM resources in addition to AWS CloudFormation resources.
-  LambdaFunction44: # Logical ID (Resource alias)
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+        StageName: Prod1
+        Cors:
+          AllowMethods: "'GET,POST,OPTIONS'"
+          AllowHeaders: "'content-type'"
+          AllowOrigin: "'*'"
+          AllowCredentials: false
+  MyFunction: # Logical ID (Resource alias)
+    # The logical ID must be alphanumeric (A-Za-z0-9) and unique within the template. Use the logical name to reference the resource in other parts of the template. For example, if you want to map an Amazon Elastic Block Store volume to an Amazon EC2 instance, you reference the logical IDs to associate the block stores with the instance.
+    # In addition to the logical ID, certain resources also have a physical ID, which is the actual assigned name for that resource, such as an EC2 instance ID or an S3 bucket name. Use the physical IDs to identify resources outside of AWS CloudFormation templates, but only after the resources have been created.
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: localCreationTest # AWS::StackName???
+      FunctionName: !Ref AWS::StackName # StackName과 동일
+#      Description:
+      MemorySize: 128
+      Timeout: 3
       CodeUri: src/
       Handler: app.lambda_handler
       Runtime: python3.9
       Architectures:
         - x86_64
       Events:
-        HelloWorld:
+        MyApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /hello
-            Method: get
+            Method: GET
+            RestApiId: !Ref MyApi
       Role: "arn:aws:iam::811925068804:role/lambda_basic_execution"
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-b3469bcb
+        SubnetIds:
+          - subnet-0e300669
+#      AssumeRolePolicyDocument:
+#      Policies: AWSLambdaBasicExecutionRole
+#      PermissionsBoundary:
+#      Environment:
       Layers:
         - "arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1"
+#      VpcConfig:
+#      (Some Properties are Omitted)
 
 
 #Outputs:
