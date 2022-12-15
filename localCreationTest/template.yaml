@@ -53,7 +53,7 @@ Resources:
   MyApi:
     Type: AWS::Serverless::Api
     Properties:
-        StageName: Prod1
+        StageName: Prod
         Cors:
           AllowMethods: "'GET,POST,OPTIONS'"
           AllowHeaders: "'content-type'"
