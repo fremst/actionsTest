@@ -1,21 +1,102 @@
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html#template-anatomy-outline.yaml
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  localCreationTest
-
-  Sample SAM Template for localCreationTest
+# (required)
+# For AWS SAM templates, you must include this section with a value of AWS::Serverless-2016-10-31.
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
-Globals:
-  Function:
-    Timeout: 3
+#Globals:
+# (optional) / type: set of globals
+# Properties that are common to all your serverless functions, APIs, and simple tables. All the AWS::Serverless::Function, AWS::Serverless::Api, and AWS::Serverless::SimpleTable resources inherit the properties that are defined in the Globals section.
+# This section is unique to AWS SAM. There isn't a corresponding section in AWS CloudFormation templates.
+#  Function:
+#    Handler:
+#    Runtime:
+#    CodeUri:
+#    DeadLetterQueue:
+#    Description:
+#    MemorySize:
+#    Timeout:
+#    VpcConfig:
+#     Environment:
+#     Tags:
+#     Tracing:
+#     KmsKeyArn:
+#     Layers:
+#     AutoPublishAlias:
+#     DeploymentPreference:
+#     PermissionsBoundary:
+#     ReservedConcurrentExecutions:
+#     ProvisionedConcurrencyConfig:
+#     AssumeRolePolicyDocument:
+#     EventInvokeConfig:
+#     Architectures:
+#     EphemeralStorage:
+
+#    Api:
+#     Auth:
+#     Name:
+#     DefinitionUri:
+#     CacheClusterEnabled:
+#     CacheClusterSize:
+#     Variables:
+#     EndpointConfiguration:
+#     MethodSettings:
+#     BinaryMediaTypes:
+#     MinimumCompressionSize:
+#     Cors:
+#     GatewayResponses:
+#     AccessLogSetting:
+#     CanarySetting:
+#     TracingEnabled:
+#     OpenApiVersion:
+#     Domain:
+
+
+Description:
+# (optional) / type: String
+# A text string that describes the template.
+# This section corresponds directly with the Description section of AWS CloudFormation templates.
+  localCreationTest
+
+  SAM Template for localCreationTest
+
+
+#Metadata:
+## (optional) / type: template metadata
+## Objects that provide additional information about the template.
+## This section corresponds directly with the Metadata section of AWS CloudFormation templates.
+
+
+#Parameters:
+## (optional) / type: set of parameters
+## Values to pass to your template at runtime (when you create or update a stack). You can refer to parameters from the Resources and Outputs sections of the template.
+## Values that are passed in using the --parameter-overrides parameter of the sam deploy command—and entries in the configuration file—take precedence over entries in the AWS SAM template file.
+## More info about sam deploy command: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html
+## More info about the configuration file: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+
+
+#Mappings:
+## (optional) / type: set of mappings
+## A mapping of keys and associated values that you can use to specify conditional parameter values, similar to a lookup table. You can match a key to a corresponding value by using the Fn::FindInMap intrinsic function in the Resources and Outputs sections.
+## This section corresponds directly with the Mappings section of AWS CloudFormation templates.
+
+
+#Conditions:
+## (optional) / type: set of conditions
+## Conditions that control whether certain resources are created or whether certain resource properties are assigned a value during stack creation or update. For example, you could conditionally create a resource that depends on whether the stack is for a production or test environment.
+## #This section corresponds directly with the Conditions section of AWS CloudFormation templates.
+
 
 Resources:
-  LambdaFunction44:
+# (required) / type: set of resources
+# The stack resources and their properties, such as an Amazon Elastic Compute Cloud (Amazon EC2) instance or an Amazon Simple Storage Service (Amazon S3) bucket. You can refer to resources in the Resources and Outputs sections of the template.
+# This section is similar to the Resources section of AWS CloudFormation templates. In AWS SAM templates, this section can contain AWS SAM resources in addition to AWS CloudFormation resources.
+  LambdaFunction44: # Logical ID (Resource alias)
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: localCreationTest #
-      CodeUri: hello_world/
+      FunctionName: localCreationTest # AWS::StackName???
+      CodeUri: src/
       Handler: app.lambda_handler
       Runtime: python3.9
       Architectures:
@@ -30,16 +111,20 @@ Resources:
       Layers:
         - "arn:aws:lambda:us-west-1:811925068804:layer:python-module-PyMuPDF:1"
 
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt localCreationTest.Arn #
-  # HelloWorldFunctionIamRole:
-  #   Description: "Implicit IAM Role created for Hello World function"
-  #   Value: !GetAtt HelloWorldFunctionRole.Arn
+
+#Outputs:
+## (optional) / type: set of outputs
+## The values that are returned whenever you view your stack's properties. For example, you can declare an output for an S3 bucket name, and then call the aws cloudformation describe-stacks AWS Command Line Interface (AWS CLI) command to view the name.
+## This section corresponds directly with the Outputs section of AWS CloudFormation templates.
+## ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+## Find out more about other implicit resources you can reference within SAM
+## https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+#  HelloWorldApi:
+#    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+#    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+#  HelloWorldFunction:
+#    Description: "Hello World Lambda Function ARN"
+#    Value: !GetAtt localCreationTest.Arn #
+#  HelloWorldFunctionIamRole:
+#     Description: "Implicit IAM Role created for Hello World function"
+#     Value: !GetAtt HelloWorldFunctionRole.Arn
