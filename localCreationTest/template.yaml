@@ -57,7 +57,7 @@ Description:
 # (optional) / type: String
 # A text string that describes the template.
 # This section corresponds directly with the Description section of AWS CloudFormation templates.
-  localCreationTest
+  localCreationTest2
 
   SAM Template for localCreationTest
 
