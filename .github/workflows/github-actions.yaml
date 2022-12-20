@@ -29,7 +29,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
-      - run: while read directory; do [ -z "$directory" ] || [ "$directory" == .github ] && continue;
+      - run:
+          while read directory; do [ -z "$directory" ] || [ "$directory" == .github ] || [ "$directory" == README.md ] || [ "$directory" == .gitignore ] || [ "$directory" == samTemplate ] && continue;
           echo 'Y' | sam sync
           --stack-name $directory
           --template-file $directory/template.yaml
