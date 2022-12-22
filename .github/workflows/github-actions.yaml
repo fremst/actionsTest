@@ -9,8 +9,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
-      - run: echo "$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1 | sort -u)" > directories.txt
-      - run: cat directories.txt
+      - run: echo "$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1,2 | sort -u)" > dirs.txt
+      - run: cat dirs.txt
+      - run: truncate -s 0 funcs.txt
+      - run: while read dir; do [ -z "$dir" ] || [ `echo $dir | cut -d "/" -f1` != functions ] && continue;
+          echo $dir | cut -d "/" -f2 | sort -u >> funcs.txt;
+          done < dirs.txt
+      - run: cat funcs.txt
       - name: Set up Python 3.8
         uses: actions/setup-python@v4
         with:
@@ -29,12 +34,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
-      - run:
-          while read directory; do [ -z "$directory" ] || [ "$directory" == .github ] || [ "$directory" == README.md ] || [ "$directory" == .gitignore ] || [ "$directory" == samTemplate ] && continue;
+      - run: while read func; do [ -z "$func" ] || [ "$directory" == samTemplate ] && continue;
           echo 'Y' | sam sync
-          --stack-name $directory
-          --template-file $directory/template.yaml
+          --stack-name $func
+          --template-file functions/$func/template.yaml
           --s3-bucket mimicus.dev
           --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
           --no-dependency-layer;
-          done < directories.txt
+          done < funcs.txt
