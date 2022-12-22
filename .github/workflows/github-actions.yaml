@@ -11,7 +11,7 @@ jobs:
           fetch-depth: 2
       - run: echo "$(git diff ${{ github.event.before }} ${{ github.sha }} --name-only | cut -d "/" -f1,2 | sort -u)" > dirs.txt
       - run: cat dirs.txt
-      - run: truncate -s 0 funcs.txt
+      - run: echo -n > funcs.txt
       - run: while read dir; do [ -z "$dir" ] || [ `echo $dir | cut -d "/" -f1` != functions ] && continue;
           echo $dir | cut -d "/" -f2 | sort -u >> funcs.txt;
           done < dirs.txt
